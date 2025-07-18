@@ -1,0 +1,22 @@
+workflows:
+  swift-package-ci:
+    name: Swift Package CI Workflow
+    xcode: 15.3
+    instance_type: mac_mini_m1
+
+    scripts:
+      - name: Build for iOS Simulator
+        script: | 
+          echo "Building for iOS Simulator..."
+          set -o pipefail && xcodebuild build \
+            -scheme Shared \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' \
+            | xcpretty
+
+      - name: Build for macOS
+        script: |
+          echo "Building for macOS..."
+          set -o pipefail && xcodebuild build \
+            -scheme Shared \
+            -destination 'platform=macOS,arch=x86_64' \
+            | xcpretty
