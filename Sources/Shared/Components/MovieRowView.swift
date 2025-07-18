@@ -1,6 +1,7 @@
 import SwiftUI
 import Kingfisher
 
+@MainActor
 public struct MovieRowView: View {
     let movie: Movie
     let isFavorite: Bool
@@ -38,20 +39,13 @@ public struct MovieRowView: View {
     
     private var mainContentView: some View {
         HStack(spacing: 16) {
-            if #available(macOS 11.0, *) {
-                KFImage(URL(string: Constants.imageBaseURL + (movie.posterPath ?? "")))
-                    .placeholder { ProgressView() }
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 80, height: 120)
-                    .cornerRadius(12)
-            } else {
-                Image("placeholder_poster", bundle: .module)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 80, height: 120)
-                    .cornerRadius(12)
-            }
+            // Kode ini sekarang aman karena seluruh struct berada di Main Actor
+            KFImage(URL(string: Constants.imageBaseURL + (movie.posterPath ?? "")))
+                .placeholder { ProgressView() }
+                .resizable()
+                .scaledToFit()
+                .frame(width: 80, height: 120)
+                .cornerRadius(12)
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(movie.title)
@@ -62,11 +56,7 @@ public struct MovieRowView: View {
 
                 if let rating = movie.rating, rating > 0 {
                     HStack {
-                        if #available(macOS 11.0, *) {
-                            Image(systemName: "star.fill")
-                        } else {
-                            Text("⭐️")
-                        }
+                        Image(systemName: "star.fill")
                         
                         Text(String(format: "%.1f", rating))
                             .font(.subheadline)
