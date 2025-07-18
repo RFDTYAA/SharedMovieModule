@@ -2,25 +2,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "SharedMovieModule",
+    name: "Shared",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v15),
         .macOS(.v12)
     ],
     products: [
-        .library(
-            name: "SharedMovieModule",
-            targets: ["SharedMovieModule"]
-        )
+        .library(name: "Shared", targets: ["Shared"])
     ],
     dependencies: [
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.0.0")
     ],
     targets: [
         .target(
-            name: "SharedMovieModule",
+            name: "Shared",
             dependencies: ["Kingfisher"],
-            path: "Sources/Shared"
+            resources: [.process("Resources")]
         )
     ]
 )
