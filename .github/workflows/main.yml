@@ -1,9 +1,21 @@
 name: Swift Package CI
-on: [push, pull_request]
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
   build:
     runs-on: macos-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Build Module
-        run: xcodebuild build -scheme SharedMovieModule -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.0'
+      - name: Check out the code
+        uses: actions/checkout@v4
+      
+      - name: Build for iOS Simulator
+        run: xcodebuild build -scheme Shared -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4'
+
+      - name: Build for macOS
+        run: xcodebuild build -scheme Shared -destination 'platform=macOS,arch=x86_64'
