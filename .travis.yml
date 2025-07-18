@@ -1,0 +1,27 @@
+language: swift
+os: osx
+
+osx_image: xcode15.3
+
+before_install:
+  - gem install xcpretty
+
+jobs:
+  include:
+    - name: "Build for iOS Simulator"
+      env:
+        - XCODE_SCHEME="Shared"
+        - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 15,OS=17.2"
+    - name: "Build for macOS"
+      env:
+        - XCODE_SCHEME="Shared"
+        - XCODE_DESTINATION="platform=macOS,arch=x86_64"
+
+script:
+  - echo "Building for $XCODE_DESTINATION"
+  - set -o pipefail && xcodebuild build -scheme "$XCODE_SCHEME" -destination "$XCODE_DESTINATION" | xcpretty
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
