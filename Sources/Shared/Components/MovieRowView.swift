@@ -46,7 +46,7 @@ public struct MovieRowView: View {
                     .frame(width: 80, height: 120)
                     .cornerRadius(12)
             } else {
-                Image("placeholder_poster")
+                Image("placeholder_poster", bundle: .module)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 120)
