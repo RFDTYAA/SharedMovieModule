@@ -1,8 +1,9 @@
 workflows:
   swift-package-ci:
     name: Swift Package CI Workflow
-    xcode: 15.3
     instance_type: mac_mini_m1
+    environment:
+      xcode: 15.3
 
     scripts:
       - name: Build for iOS Simulator
